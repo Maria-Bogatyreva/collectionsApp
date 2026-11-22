@@ -1,10 +1,10 @@
 import './filter.scss'
 import {useState} from "react";
 import {handleImgFailed} from "../../utils.ts";
+import useCollectionsSearchParams from "../../hooks/useCollectionsSearchParams.ts";
 // import useQuestionParams from "../../hooks/useQuestionParams.ts";
-// import type {AllowedParamName} from "../../hooks/useQuestionParams.ts";
+import type {AllowedParamName} from "../../hooks/useCollectionsSearchParams.ts";
 
-type AllowedParamName = 'specializations' | 'access'
 interface FilterItem {
   id: number;
   title: string;
@@ -15,15 +15,13 @@ interface FilterProps {
   className?: string;
   filterItems?: FilterItem[];
   hasIcon?: boolean;
-  multiple?: boolean;
-  selectedItem: string | number | number[];
-  filterParam?: AllowedParamName;
-
+  selectedItem: number | string;
+  filterParam: AllowedParamName;
 }
 
-export default function Filter({filterName, filterItems=[], selectedItem, hasIcon = false, filterParam, className=''
+export default function Filter({filterName, filterItems=[], selectedItem, filterParam, hasIcon = false, className=''
 }: FilterProps) {
-  // const {handleFilterChange} = useQuestionParams()
+  const {handleFilterChange} = useCollectionsSearchParams();
   const [isCollapsed, setIsExpanded] = useState(true);
 
   const VISIBLE_COUNT = 5
@@ -33,16 +31,14 @@ export default function Filter({filterName, filterItems=[], selectedItem, hasIco
   const hasMoreItems = filterItems.length > VISIBLE_COUNT;
 
   function handleClick(newValue: number) {
-    // handleFilterChange(newValue, filterParam, multiple)
-    console.log(newValue)
+    handleFilterChange(newValue, filterParam);
   }
 
   function isItemActive(itemId: number) {
-    // Если selectedItem - массив (для multiple фильтров)
-    if (Array.isArray(selectedItem)) {
-      return selectedItem.includes(itemId);
+    if (filterParam === 'isFree') {
+      return selectedItem.toString() ==='true' && itemId === 1 ||
+             selectedItem.toString() ==='false' && itemId === 0
     }
-    // Если selectedItem - строка или число (для одиночных фильтров)
     return Number(selectedItem) === itemId;
   }
   return (

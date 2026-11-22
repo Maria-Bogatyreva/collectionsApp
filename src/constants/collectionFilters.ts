@@ -1,11 +1,11 @@
 export const accessData = [
   {
-    id: 1,
+    id: 0,
     title: 'Для участников',
     imageSrc: '/images/accessImg.svg'
   },
   {
-    id: 2,
+    id: 1,
     title: 'Для всех'
   }
 ]
