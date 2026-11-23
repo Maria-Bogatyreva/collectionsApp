@@ -1,21 +1,7 @@
 import './collectionCard.scss'
 import {Link} from "react-router-dom";
 import {handleImgFailed, pluralize} from "../../utils.ts";
-
-interface Specialization  {
-  id: number;
-  title: string;
-}
-
-interface Collection{
-  id: number;
-  imageSrc?: string;
-  specializations: Specialization[];
-  title: string;
-  isFree: boolean;
-  questionsCount: number;
-  keywords: string[];
-}
+import type {Collection} from "../../services/collectionsApi.types.ts";
 
 interface CollectionCardProps {
   collection: Collection;

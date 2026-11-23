@@ -4,15 +4,13 @@ import Skeleton from "../../components/Skeleton/Skeleton.tsx";
 import Pagination from "../../components/Pagination/Pagination.tsx";
 import Collections from "../../components/Collections/Collections.tsx";
 import Filters from "../../components/Filters/Filters.tsx";
+import useCollections from "../../hooks/useCollections.ts";
 
 export default function CollectionsCatalog() {
   const [isFilterOpen] = useState(false)
-
-  // Временно
-  const isLoading = false;
-
-
   const disabledClass = isFilterOpen ? '_disabled' : ''
+
+  const {isLoading} = useCollections();
 
   return (
     <main className="main">

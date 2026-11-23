@@ -1,5 +1,5 @@
 import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
-import type {Specialization, PaginatedResponse} from "./collectionsApi.types.ts";
+import type {Specialization, PaginatedResponse, QueryParams, Collection} from "./collectionsApi.types.ts";
 
 export const apiSlice = createApi({
   reducerPath: 'collectionsApi',
@@ -12,13 +12,13 @@ export const apiSlice = createApi({
       query: () => 'specializations?limit=15', // эндпоинт для получения ВСЕХ специализаций
       transformResponse: (response: PaginatedResponse<Specialization>) => response.data
     }),
-    getCollectionById: builder.query({
+    getCollectionById: builder.query<Collection, string>({
       query: (id) => `/collections/${id}/public` //эндпоинт для получения ОДНОЙ коллекции
     }),
     getQuestionById: builder.query({
       query: (id) => `/questions/public-questions/${id}` //эндпоинт для получения ОДНОГО вопроса
     }),
-    getCollections: builder.query({
+    getCollections: builder.query<PaginatedResponse<Collection>, QueryParams>({
       query: (params) => {
         const {
           page,
