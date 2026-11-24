@@ -4,7 +4,6 @@ import {useParams} from "react-router-dom";
 import {useGetCollectionByIdQuery} from "../../services/collectionsApi.ts";
 import {handleImgFailed} from "../../utils.ts";
 import {skipToken} from "@reduxjs/toolkit/query";
-import AccessDenied from "../../components/AccessDenied/AccessDenied.tsx";
 import Questions from "../../components/Questions/Questions.tsx";
 
 export default function Collection() {
@@ -49,12 +48,7 @@ export default function Collection() {
             </div>
           </div>
           <div className="collection__body-item">
-            {
-              collection.isFree ?
-                <Questions/>
-                :
-                <AccessDenied/>
-            }
+                <Questions isFree={collection.isFree}/>
           </div>
         </div>
         <div className={`collection__info ${isInfoOpen ? '_open' : ''}`}>

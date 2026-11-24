@@ -99,13 +99,13 @@ main {
   display: none;
 }
 
-@media (max-width: 375px) {
+@media (width < 376px) {
   ._mob {
     display: block;
   }
 }
 
-@media (min-width: 376px) and (max-width: 768px) {
+@media (376px <= width < 769px) {
   ._tablet {
     display: block;
   }
