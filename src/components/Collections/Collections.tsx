@@ -6,6 +6,7 @@ import type {Collection} from "../../services/collectionsApi.types.ts";
 export default function Collections() {
 const {collections} = useCollections();
 
+
   return (
     <div className="collections">
       <h1 className="collections__title">Коллекции</h1>

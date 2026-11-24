@@ -1,6 +1,10 @@
 .collection {
   padding-top: 40px;
 
+  @media (max-width: 768px) {
+    overflow-x: clip;
+  }
+
   &__inner {
     position: relative;
     display: grid;
@@ -17,11 +21,35 @@
     }
   }
 
+  &__open-btn {
+    display: none;
+    width: auto;
+    background: var(--bg-color-accent);
+    cursor: pointer;
+    z-index: 1;
+
+    svg {display: block}
+
+    @media (max-width:768px) {
+      position: absolute;
+      right: 8px;
+      top: 16px;
+      display: block;
+      padding: 6px;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+    }
+
+    @media (max-width: 375px) {
+      right: 25px;
+    }
+  }
+
   &__body {
     display: flex;
     gap: 20px;
     flex-direction: column;
-
+    position: relative;
 
     &-item {
       background: var(--bg-color-accent);
@@ -46,6 +74,7 @@
     height: 157px;
     border-radius: 12px;
     overflow: hidden;
+    flex-shrink: 0;
 
     img {
       width: 100%;
@@ -58,15 +87,40 @@
     font-size: 20px;
     line-height: 1.2;
     margin-bottom: 8px;
-    max-width: 480px;
+    max-width: 400px;
   }
   &__info {
     position: sticky;
     top: 75px;
 
     @media (max-width: 768px) {
-      position: static;
-      margin-top: 20px;
+      position: absolute;
+      visibility: hidden;
+      pointer-events: none;
+      transform: translateX(100%);
+      opacity: 0;
+      transition: transform .2s ease, opacity .2s ease, visibility .2s;
+      top: -40px;
+      right: 0;
+      width: 328px;
+      max-width: calc(100% - 60px);
+      max-height: calc(100dvh - 100px);
+      overflow-y: auto;
+      z-index: 2;
+
+      &._open {
+        visibility: visible;
+        pointer-events: auto;
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    @media (max-width: 375px) {
+      right: 0;
+      left: 0;
+      width: 100%;
+      max-width: none;
     }
 
     a {
@@ -138,10 +192,30 @@
       }
     }
     &-close {
+      display: none;
       margin-bottom: -16px;
       width: auto;
       align-self: flex-end;
+      border: 0;
+      padding: 0;
+      background: none;
+      cursor: pointer;
+
+      @media (max-width: 768px) {
+        display: block;
+      }
     }
   }
-  &__questions {}
+  &__information {
+    @media (max-width: 768px) {
+      border-radius: 0;
+      padding: 16px;
+      box-shadow: 0 4px 10px 0 #6A63761A;
+    }
+
+    @media (max-width: 375px) {
+      padding: 10px;
+      width: 100%;
+    }
+  }
 }
