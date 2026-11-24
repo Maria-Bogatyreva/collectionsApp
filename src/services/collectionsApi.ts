@@ -2,10 +2,10 @@ import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
 import type {
   Specialization,
   PaginatedResponse,
-    Collection,
+  Collection,
   QuestionItem,
   QuestionQueryParams,
-  CollectionQueryParams
+  CollectionQueryParams, Question
 } from "./collectionsApi.types.ts";
 
 export const apiSlice = createApi({
@@ -25,7 +25,7 @@ export const apiSlice = createApi({
       query: (id) => `/collections/${id}/public`
     }),
     //эндпоинт для получения ОДНОГО ВОПРОСА
-    getQuestionById: builder.query({
+    getQuestionById: builder.query<Question, string>({
       query: (id) => `/questions/public-questions/${id}` //эндпоинт для получения ОДНОГО вопроса
     }),
     //эндпоинт для получения коллекций с квери-параметрами
@@ -74,4 +74,9 @@ export const apiSlice = createApi({
 })
 
 // экспорт хуков для использования в компонентах
-export const {useGetSpecializationsQuery, useGetCollectionByIdQuery, useGetCollectionsQuery, useGetQuestionsByIdCollectionQuery} = apiSlice;
+export const { useGetSpecializationsQuery,
+               useGetCollectionByIdQuery,
+               useGetCollectionsQuery,
+               useGetQuestionsByIdCollectionQuery,
+               useGetQuestionByIdQuery
+} = apiSlice;
