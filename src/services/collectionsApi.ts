@@ -1,5 +1,12 @@
 import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
-import type {Specialization, PaginatedResponse, QueryParams, Collection} from "./collectionsApi.types.ts";
+import type {
+  Specialization,
+  PaginatedResponse,
+    Collection,
+  QuestionItem,
+  QuestionQueryParams,
+  CollectionQueryParams
+} from "./collectionsApi.types.ts";
 
 export const apiSlice = createApi({
   reducerPath: 'collectionsApi',
@@ -8,17 +15,21 @@ export const apiSlice = createApi({
     timeout: 5000
   }),
   endpoints: (builder) => ({
+    // эндпоинт для получения ВСЕХ специализаций
     getSpecializations: builder.query<Specialization[], void>({
-      query: () => 'specializations?limit=15', // эндпоинт для получения ВСЕХ специализаций
+      query: () => 'specializations?limit=15',
       transformResponse: (response: PaginatedResponse<Specialization>) => response.data
     }),
+    //эндпоинт для получения ОДНОЙ коллекции
     getCollectionById: builder.query<Collection, string>({
-      query: (id) => `/collections/${id}/public` //эндпоинт для получения ОДНОЙ коллекции
+      query: (id) => `/collections/${id}/public`
     }),
+    //эндпоинт для получения ОДНОГО ВОПРОСА
     getQuestionById: builder.query({
       query: (id) => `/questions/public-questions/${id}` //эндпоинт для получения ОДНОГО вопроса
     }),
-    getCollections: builder.query<PaginatedResponse<Collection>, QueryParams>({
+    //эндпоинт для получения коллекций с квери-параметрами
+    getCollections: builder.query<PaginatedResponse<Collection>, CollectionQueryParams>({
       query: (params) => {
         const {
           page,
@@ -41,9 +52,26 @@ export const apiSlice = createApi({
           params: searchParams
         }
       }
+    }),
+    //эндпоинт для получения ВОПРОСОВ коллекции
+    getQuestionsByIdCollection: builder.query<PaginatedResponse<QuestionItem>, QuestionQueryParams>({
+      query: (params) => {
+        const {
+          page,
+          limit,
+          collection
+        } = params;
+
+        const searchParams = new URLSearchParams({limit: limit.toString(), page: page, collection: collection})
+
+        return {
+          url: '/questions/public-questions',
+          params: searchParams
+        }
+      }
     })
   })
 })
 
 // экспорт хуков для использования в компонентах
-export const {useGetSpecializationsQuery, useGetCollectionByIdQuery, useGetCollectionsQuery} = apiSlice;
+export const {useGetSpecializationsQuery, useGetCollectionByIdQuery, useGetCollectionsQuery, useGetQuestionsByIdCollectionQuery} = apiSlice;

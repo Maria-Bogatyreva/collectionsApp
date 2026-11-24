@@ -27,6 +27,27 @@ export interface Collection {
   createdBy: CollectionAuthor;
 }
 
+interface Skill {
+  id: number;
+  title: string;
+  imageSrc: string | null;
+}
+
+export interface QuestionItem {
+  id: number;
+  complexity: number;
+  title: string;
+  rate: number;
+  shortAnswer: string;
+}
+
+export interface Question extends QuestionItem {
+  description: string;
+  imageSrc: string | null;
+  longAnswer: string;
+  questionSkills: Skill[];
+}
+
 export interface PaginatedResponse<T> {
   data: T[];
   limit: number;
@@ -34,9 +55,15 @@ export interface PaginatedResponse<T> {
   total: number;
 }
 
-export interface QueryParams {
+export interface CollectionQueryParams {
   page: string;
   limit: number;
-  selectedSpecialization: string;
-  selectedAccess: string;
+  selectedSpecialization?: string;
+  selectedAccess?: string;
+}
+
+export interface QuestionQueryParams {
+  page: string;
+  limit: number;
+  collection: string;
 }

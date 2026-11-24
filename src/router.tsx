@@ -26,7 +26,7 @@ export const router= createBrowserRouter([
         element: <Collection />,
       },
       {
-        path: 'question/:id',
+        path: 'questions/:id',
         element: <Question />,
       },
       {

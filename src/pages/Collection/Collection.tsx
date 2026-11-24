@@ -4,6 +4,8 @@ import {useParams} from "react-router-dom";
 import {useGetCollectionByIdQuery} from "../../services/collectionsApi.ts";
 import {handleImgFailed} from "../../utils.ts";
 import {skipToken} from "@reduxjs/toolkit/query";
+import AccessDenied from "../../components/AccessDenied/AccessDenied.tsx";
+import Questions from "../../components/Questions/Questions.tsx";
 
 export default function Collection() {
   const {id} = useParams();
@@ -11,12 +13,18 @@ export default function Collection() {
 
   const fallbackSrc = '/images/collectionImg.jpg';
 
-
-  console.log(collection)
-
-  if (isLoading) return <p>Загрузка коллекции…</p>
+  if (isLoading) return (
+    <main className="main collection">
+      <div className="container collection__inner">
+        <div className="collection__body">
+          <div className="collection__body-item collection__caption">Загрузка коллекции...</div>
+        </div>
+      </div>
+    </main>
+  )
   if (error) return <p>Не удалось загрузить коллекцию.</p>
   if (!collection) return <p>Данные коллекции отсутствуют.</p>
+
   return (
     <main className="main collection">
       <div className="container collection__inner">
@@ -32,9 +40,20 @@ export default function Collection() {
             </div>
           </div>
           <div className="collection__body-item">
-            Вопросы у коллекции
+            {
+              collection.isFree ?
+                <>
+                  <Questions />
+                  {/*<Pagination />*/}
+                </>
+
+                :
+                <AccessDenied />
+            }
           </div>
         </div>
+
+
         <div className="collection__info">
           <div className="collection__info-inner collection__information">
             <div className="collection__info-item">

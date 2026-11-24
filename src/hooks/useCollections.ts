@@ -6,7 +6,6 @@ export default function useCollections() {
   const {page, selectedSpecialization, selectedAccess} = useCollectionsSearchParams();
   const {currentData, error, isFetching: isLoading} = useGetCollectionsQuery({page, limit, selectedSpecialization, selectedAccess})
 
-  console.log(currentData)
   const collections = currentData?.data ?? [];
   const total = currentData?.total ?? 0;
 
