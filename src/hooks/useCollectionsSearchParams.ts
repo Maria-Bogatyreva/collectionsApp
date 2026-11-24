@@ -42,24 +42,27 @@ export default function useCollectionsSearchParams() {
   function handleNextPage(e: MouseEvent<HTMLAnchorElement>) {
     e.preventDefault();
     setSearchParams(prev => {
-      prev.set('page', (Number(page) + 1).toString());
-      return prev;
+      const next = new URLSearchParams(prev);
+      next.set('page', (Number(page) + 1).toString());
+      return next;
     })
   }
 
   function handlePrevPage(e: MouseEvent<HTMLAnchorElement>) {
     e.preventDefault();
     setSearchParams(prev => {
-      prev.set('page', (Number(page) - 1).toString());
-      return prev;
+      const next = new URLSearchParams(prev);
+      next.set('page', (Number(page) - 1).toString());
+      return next;
     })
   }
 
   function handlePageClick(e: MouseEvent<HTMLAnchorElement>, pageNumber:number) {
     e.preventDefault();
     setSearchParams(prev => {
-      prev.set('page', pageNumber.toString());
-      return prev;
+      const next = new URLSearchParams(prev);
+      next.set('page', pageNumber.toString());
+      return next;
     })
   }
 
