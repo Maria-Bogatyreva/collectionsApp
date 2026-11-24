@@ -10,7 +10,7 @@ export default function CollectionsCatalog() {
   const [isFilterOpen] = useState(false)
   const disabledClass = isFilterOpen ? '_disabled' : ''
 
-  const {isLoading} = useCollections();
+  const {total, isLoading} = useCollections();
 
   return (
     <main className="main">
@@ -26,7 +26,7 @@ export default function CollectionsCatalog() {
             :
             <>
               <Collections/>
-              <Pagination />
+              <Pagination total={total} />
             </>
           }
         </div>

@@ -1,5 +1,4 @@
 import './collection.scss'
-
 import {useParams} from "react-router-dom";
 import {useGetCollectionByIdQuery} from "../../services/collectionsApi.ts";
 import {handleImgFailed} from "../../utils.ts";
@@ -10,7 +9,6 @@ import Questions from "../../components/Questions/Questions.tsx";
 export default function Collection() {
   const {id} = useParams();
   const {data: collection, isLoading, error} = useGetCollectionByIdQuery(id ?? skipToken)
-
   const fallbackSrc = '/images/collectionImg.jpg';
 
   if (isLoading) return (
@@ -42,35 +40,29 @@ export default function Collection() {
           <div className="collection__body-item">
             {
               collection.isFree ?
-                <>
-                  <Questions />
-                  {/*<Pagination />*/}
-                </>
-
+                <Questions/>
                 :
-                <AccessDenied />
+                <AccessDenied/>
             }
           </div>
         </div>
-
-
         <div className="collection__info">
           <div className="collection__info-inner collection__information">
             <div className="collection__info-item">
-                <div className="collection__info-title">Специализация</div>
-                <ul className="collection__info-list">
-                  {
-                    collection.specializations.map(s => (
-                      <li key={s.id}>{s.title}</li>
-                    ))
-                  }
-                </ul>
+              <div className="collection__info-title">Специализация</div>
+              <ul className="collection__info-list">
+                {
+                  collection.specializations.map(s => (
+                    <li key={s.id}>{s.title}</li>
+                  ))
+                }
+              </ul>
             </div>
             <div className="collection__info-item">
-                <div className="collection__info-title">Доступ</div>
-                <ul className="collection__info-list">
-                  <li>{collection.isFree ? 'Для всех' : 'Для участников'}</li>
-                </ul>
+              <div className="collection__info-title">Доступ</div>
+              <ul className="collection__info-list">
+                <li>{collection.isFree ? 'Для всех' : 'Для участников'}</li>
+              </ul>
             </div>
             {
               collection.company &&
@@ -90,12 +82,12 @@ export default function Collection() {
               </div>
             }
             <div className="collection__info-item">
-                <div className="collection__info-title">Количество вопросов</div>
-                <ul className="collection__info-list">
-                  <li>
-                    {collection.questionsCount}
-                  </li>
-                </ul>
+              <div className="collection__info-title">Количество вопросов</div>
+              <ul className="collection__info-list">
+                <li>
+                  {collection.questionsCount}
+                </li>
+              </ul>
             </div>
             <div className="collection__info-item">
               <div className="collection__info-title">Ключевые слова</div>
