@@ -60,6 +60,7 @@ export interface CollectionQueryParams {
   limit: number;
   selectedSpecialization?: string;
   selectedAccess?: string;
+  searchQuery: string
 }
 
 export interface QuestionQueryParams {

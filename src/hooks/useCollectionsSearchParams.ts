@@ -9,9 +9,7 @@ export default function useCollectionsSearchParams() {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const page = searchParams.get('page') || '1' //страница
-
-  // тут будет поиск
-
+  const searchQuery = searchParams.get('titleOrDescriptionSearch') || ''
   const selectedSpecialization = searchParams.get('specializations') || ''; // специализация
   const selectedAccess = searchParams.get('isFree') || ''; // уровень доступа
 
@@ -67,9 +65,12 @@ export default function useCollectionsSearchParams() {
   }
 
   return {
+    searchParams,
+    setSearchParams,
     page,
     selectedSpecialization,
     selectedAccess,
+    searchQuery,
     handleFilterChange,
     handleNextPage,
     handlePrevPage,

@@ -8,7 +8,6 @@ import {skipToken} from "@reduxjs/toolkit/query";
 
 export default function Question() {
   const location = useLocation();
-  
   const navigationState: unknown = location.state;
   const returnTo =
     typeof navigationState === 'object' && navigationState !== null &&

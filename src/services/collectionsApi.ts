@@ -35,7 +35,8 @@ export const apiSlice = createApi({
           page,
           limit,
           selectedSpecialization,
-          selectedAccess
+          selectedAccess,
+          searchQuery
         } = params;
         const searchParams = new URLSearchParams({limit: limit.toString(), page: page})
 
@@ -45,6 +46,10 @@ export const apiSlice = createApi({
 
         if (selectedAccess) {
           searchParams.set('isFree', selectedAccess)
+        }
+
+        if (searchQuery) {
+          searchParams.set('titleOrDescriptionSearch', searchQuery)
         }
 
         return {
