@@ -4,11 +4,11 @@ import {useGetQuestionsByIdCollectionQuery} from "../services/collectionsApi.ts"
 import {limit} from "../constants/collectionFilters.ts";
 import {skipToken} from "@reduxjs/toolkit/query";
 
-export default function useQuestions() {
+export default function useQuestions(enabled: boolean) {
   const {id:collection} = useParams();
   const {page} = useCollectionsSearchParams();
 
-  const params = collection ? {page, limit, collection} : skipToken;
+  const params = enabled && collection ? {page, limit, collection} : skipToken;
 
   const {currentData, error, isFetching} = useGetQuestionsByIdCollectionQuery(params);
   const questions = currentData?.data ?? [];

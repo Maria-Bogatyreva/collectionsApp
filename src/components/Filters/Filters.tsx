@@ -9,7 +9,7 @@ interface FiltersProps {
   onClose: () => void;
 }
 export default function Filters({onClose} :FiltersProps) {
-  const {data: specializations =[]} = useGetSpecializationsQuery();
+  const {data: specializations, isFetching, isError, refetch} = useGetSpecializationsQuery();
   const {selectedSpecialization, selectedAccess} = useCollectionsSearchParams();
 
   return (
@@ -27,7 +27,20 @@ export default function Filters({onClose} :FiltersProps) {
           <Search />
         </div>
         <div className="filters__item">
-          <Filter filterName={'Специализация'} filterItems={specializations} selectedItem={selectedSpecialization} filterParam='specializations'/>
+          {isFetching && !specializations && <p>Загружаем специализации…</p>}
+          {isError && !isFetching && (
+            <div>
+              <p>
+                {specializations ? 'Не удалось обновить специализации.' : 'Не удалось загрузить специализации.'}
+              </p>
+              <button type="button" onClick={() => void refetch()}>Повторить</button>
+            </div>
+          )}
+          {specializations && (specializations.length > 0 ? (
+            <Filter filterName="Специализация" filterItems={specializations} selectedItem={selectedSpecialization} filterParam="specializations" />
+          ) : (
+            <p>Специализаций пока нет.</p>
+          ))}
         </div>
         <div className="filters__item">
           <Filter filterName={'Доступ'} filterItems={accessData} selectedItem={selectedAccess} filterParam='isFree' hasIcon/>

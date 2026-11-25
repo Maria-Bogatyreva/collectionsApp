@@ -15,7 +15,7 @@ interface FilterProps {
   className?: string;
   filterItems?: FilterItem[];
   hasIcon?: boolean;
-  selectedItem: number | string;
+  selectedItem: string;
   filterParam: AllowedParamName;
 }
 

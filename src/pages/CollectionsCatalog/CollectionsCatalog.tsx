@@ -15,13 +15,7 @@ export default function CollectionsCatalog() {
   }
 
 
-  const {total, error, isLoading} = useCollections();
-
-  if(error) return (
-    <div className="main">
-      <h1 className="container main__inner">Ошибка запроса</h1>
-    </div>
-  )
+  const {collections, total, hasData, isFetching, isError, refetch} = useCollections();
 
   return (
     <main className="main">
@@ -32,14 +26,22 @@ export default function CollectionsCatalog() {
           </svg>
         </div>
         <div className={`main__collections ${disabledClass}`}>
-          {isLoading ?
-            <Skeleton />
-            :
+          {isFetching && !hasData && <Skeleton />}
+          {isFetching && hasData && <p>Обновляем коллекции…</p>}
+          {isError && !isFetching && (
+            <div>
+              <p>
+                {hasData ? 'Не удалось обновить коллекции.' : 'Не удалось загрузить коллекции.'}
+              </p>
+              <button type="button" onClick={() => void refetch()}>Повторить</button>
+            </div>
+          )}
+          {hasData && (
             <>
-              <Collections/>
+              <Collections collections={collections} />
               <Pagination total={total} />
             </>
-          }
+          )}
         </div>
         <div className={`main__filters trs ${ isFilterOpen ? '_open' : ''}`}>
           <Filters onClose={toggleFiltersOpen}/>

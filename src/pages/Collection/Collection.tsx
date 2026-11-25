@@ -13,10 +13,12 @@ export default function Collection() {
   function toggleInfoOpen() {
     setIsInfoOpen(prev => !prev);
   }
-  const {data: collection, isLoading, error} = useGetCollectionByIdQuery(id ?? skipToken)
+  const {currentData: collection, isFetching, isError, refetch} = useGetCollectionByIdQuery(id ?? skipToken)
   const fallbackSrc = '/images/collectionImg.jpg';
 
-  if (isLoading) return (
+  if (!id) return <p>Некорректный адрес коллекции.</p>;
+
+  if (!collection && isFetching) return (
     <main className="main collection">
       <div className="container collection__inner">
         <div className="collection__body">
@@ -25,7 +27,18 @@ export default function Collection() {
       </div>
     </main>
   )
-  if (error) return <p>Не удалось загрузить коллекцию.</p>
+  if (!collection && isError) return (
+    <main className="main collection">
+      <div className="container collection__inner">
+        <div className="collection__body">
+          <div className="collection__body-item">
+            <p>Не удалось загрузить коллекцию.</p>
+            <button type="button" onClick={() => void refetch()}>Повторить</button>
+          </div>
+        </div>
+      </div>
+    </main>
+  )
   if (!collection) return <p>Данные коллекции отсутствуют.</p>
 
   return (

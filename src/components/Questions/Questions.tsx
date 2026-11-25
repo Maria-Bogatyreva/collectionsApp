@@ -8,9 +8,7 @@ interface QuestionsProps {
     isFree: boolean;
 }
 export default function Questions({isFree} : QuestionsProps) {
-  const {questions, error, isFetching, total} = useQuestions();
-
-  console.log(isFree)
+  const {questions, error, isFetching, total} = useQuestions(isFree);
 
   if (error) {
     return (
@@ -59,7 +57,7 @@ export default function Questions({isFree} : QuestionsProps) {
                     </ul>
                     :
                     <>
-                      <InfoBlock imageSrc="/images/soonIcon" text="Список вопросов Вопросы для данной коллекции скоро появятся"/>
+                      <InfoBlock imageSrc="/images/soonIcon.png" text="Список вопросов Вопросы для данной коллекции скоро появятся"/>
                     </>
                 }
               </>
@@ -80,7 +78,7 @@ export default function Questions({isFree} : QuestionsProps) {
               </>
           }
       </div>
-      <Pagination total={total}/>
+      {isFree && <Pagination total={total}/>}
     </>
 
   )
